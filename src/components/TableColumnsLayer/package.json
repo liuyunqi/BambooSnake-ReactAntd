@@ -1,0 +1,12 @@
+{
+  "name": "TableColumnsLayer",
+  "version": "1.0.0",
+  "description": "表格列动态变化组件",
+  "main": "index.js",
+  "keywords": ["表格列", "antd"],
+  "author": "cgf_150@163.com",
+  "license": "ISC",
+  "dependencies": {
+    "antd": "4.15.6"
+  }
+}

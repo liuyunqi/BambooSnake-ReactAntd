@@ -1,0 +1,78 @@
+.layerBg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 1001;
+
+  .columnBox {
+    width: 470px;
+    padding: 12px;
+    position: fixed;
+    z-index: 10;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014,
+      0 9px 28px 8px #0000000d;
+    pointer-events: auto;
+    
+    text-align: left;
+
+    .topBox {
+      margin-bottom: 12px;
+    }
+
+    .colBox {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .checkboxWrap {
+        display: flex;
+        align-items: center;
+        width: 136px;
+        box-sizing: border-box;
+        margin-right: 10px;
+        margin-bottom: 12px;
+
+        :global(.ant-checkbox-wrapper) {
+          display: flex;
+        }
+        
+        :global(.ant-checkbox + span) {
+          line-height: normal;
+        }
+
+        .colLabel {
+          display: block;
+          width: 110px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 14px;
+        }
+
+      }
+
+      .checkboxWrap:nth-of-type(3n) {
+        margin-right: 0;
+      }
+    }
+
+    .btns {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.triggerBtn {
+  display: inline-block;
+}

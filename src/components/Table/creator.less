@@ -1,0 +1,40 @@
+
+.operationButton {
+    margin-right: 8px;
+    padding: 2px 4px;
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+
+    &.actionStateHide {
+        display: none;
+    }
+
+    &.actionStateTransparent {
+        visibility: hidden;
+    }
+
+    &.actionStateLocked {
+        color: #777;
+        opacity: 0.5;
+        cursor: not-allowed;
+
+        * {
+            cursor: not-allowed;
+        }
+
+        .operationIcon,
+        .operationText {
+            color: #777;
+        }
+    }
+}
+
+.operationIcon {
+    margin-right: 4px;
+    color: #009639;
+}
+
+.operationText {
+
+}

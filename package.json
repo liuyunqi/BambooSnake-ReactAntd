@@ -1,0 +1,24 @@
+{
+  "name": "bamboosnaketool",
+  "version": "1.10.24",
+  "description": "Cool tool features and some components.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": {
+    "name": "liuyunqi",
+    "email": "283373960@qq.com"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "umi": "^3.2.14",
+    "xlsx": "^0.16.9",
+    "antd": "4.15.6",
+    "react": "^16.12.0",
+    "react-document-title": "^2.0.3",
+    "react-dom": "^16.12.0",
+    "echarts": "^5.1.1"
+  }
+}
