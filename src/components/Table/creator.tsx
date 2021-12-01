@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Modal, Popconfirm } from 'antd';
-import { rcColumnItemConf, rcColumnItemSet, enumEventType, enumViewMode, confrimConf, RowData, sActions } from './index.d';
+import { rcColumnItemConf, rcColumnItemSet, Table_enumEventType, Table_enumViewMode, confrimConf, RowData, Table_sActions } from './index.d';
 import styles from './creator.less';
 
 /*
@@ -14,7 +14,7 @@ import styles from './creator.less';
 
 
 // 操作渲染
-export const ColumnRender_operationAction = (text: string, record: RowData, index: number, actions: sActions[]): JSX.Element => {
+export const ColumnRender_operationAction = (text: string, record: RowData, index: number, actions: Table_sActions[]): JSX.Element => {
 
   // console.log('===<>>record', record);
   // console.log('===<>>text', text);
@@ -22,16 +22,16 @@ export const ColumnRender_operationAction = (text: string, record: RowData, inde
   let insetDom: JSX.Element[] = [];
 
   // 分配
-  const allocation = (eventType: enumEventType, eventSubstance: Function | confrimConf) => {
+  const allocation = (eventType: Table_enumEventType, eventSubstance: Function | confrimConf) => {
 
-    if (eventType === enumEventType.CALLBACK) {
+    if (eventType === Table_enumEventType.CALLBACK) {
       (eventSubstance as Function)(record);
     } else {
       let { title, content, ok, cancel } = eventSubstance as confrimConf;
 
-      if (eventType === enumEventType.MODALBOX) {
+      if (eventType === Table_enumEventType.MODALBOX) {
         creatModal({ title, content, ok, cancel });
-      } else if (eventType === enumEventType.POPCONFIRM) {
+      } else if (eventType === Table_enumEventType.POPCONFIRM) {
         // antd HTML bind
       }
     }
@@ -83,12 +83,12 @@ export const ColumnRender_operationAction = (text: string, record: RowData, inde
   }
 
   // render actions
-  actions.forEach((_item: sActions, _idx: number) => {
+  actions.forEach((_item: Table_sActions, _idx: number) => {
 
     const {
       text,
       icon,
-      eventType = enumEventType.CALLBACK,
+      eventType = Table_enumEventType.CALLBACK,
       eventSubstance,
       viewMode,
       condition
@@ -98,7 +98,7 @@ export const ColumnRender_operationAction = (text: string, record: RowData, inde
     let isLocked: boolean = false;
     let isHide: boolean = false;
     let isTransparent: boolean = false;
-    // let isEventType: enumEventType | null = null;
+    // let isEventType: Table_enumEventType | null = null;
 
     if (!eventSubstance) throw Error('操作单项的事件资产配置必须存在，请编码人员补齐。(components/Table/creator.tsx - eventSubstance)');
 
@@ -121,7 +121,7 @@ export const ColumnRender_operationAction = (text: string, record: RowData, inde
     let stopExecute: boolean = isLocked || isTransparent;
 
     // 渲染类型
-    if (!viewMode || viewMode === enumViewMode.DEFAULT) {
+    if (!viewMode || viewMode === Table_enumViewMode.DEFAULT) {
 
       btn = <a
         className={ getButtonStyleClass }
@@ -132,7 +132,7 @@ export const ColumnRender_operationAction = (text: string, record: RowData, inde
           { text }
       </a>;
 
-    } else if (viewMode === enumViewMode.ICON) {
+    } else if (viewMode === Table_enumViewMode.ICON) {
 
       btn = <div
         className={ getButtonStyleClass }
@@ -145,7 +145,7 @@ export const ColumnRender_operationAction = (text: string, record: RowData, inde
         <i className={ styles.operationIcon }>{ icon }</i>
       </div>;
 
-    } else if (viewMode === enumViewMode.ICONTEXT) {
+    } else if (viewMode === Table_enumViewMode.ICONTEXT) {
 
       btn = <div
         className={ getButtonStyleClass }
@@ -160,7 +160,7 @@ export const ColumnRender_operationAction = (text: string, record: RowData, inde
     }
 
     // 气泡确认模式 - 由受限于 antd 的 jsxhtml 结构要求。（无法脚本api调用）
-    if (eventType === enumEventType.POPCONFIRM && btn && !stopExecute) {
+    if (eventType === Table_enumEventType.POPCONFIRM && btn && !stopExecute) {
       btn = creatPopconfirm(btn as JSX.Element, _idx, eventSubstance as confrimConf);
     }
 

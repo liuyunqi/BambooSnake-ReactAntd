@@ -5,7 +5,7 @@
 import React from 'react';
 import { Input } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import { ColumnsTypeMine, ColumnCustomType, customType, conditionUnit, TABLETEMP_PROPS, ALLEVENTCallbackType, Enum_ALLEVENT } from './index.d';
+import { Table_ColumnsTypeMine, Table_ColumnCustomType, customType, conditionUnit, TABLETEMP_PROPS, ALLEVENTCallbackType, Table_Enum_ALLEVENT } from './index.d';
 import utils, { enumDataMode } from '../../utils';
 import styles from './template.less';
 
@@ -39,7 +39,7 @@ export const emptyReturn = (value: string, replaceStr: string = '-'): [ boolean,
 }
 
 // 默认常规渲染
-export const renderNORMALRENDER = (columnItem: ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
+export const renderNORMALRENDER = (columnItem: Table_ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
   let setProperty = options.customSettings || {};
   let [ isEmpty, setVal ] = emptyReturn(text);
   let defaultProp = {
@@ -54,7 +54,7 @@ export const renderNORMALRENDER = (columnItem: ColumnsTypeMine, text: string, re
 }
 
 // 默认1行显示
-export const renderLINESINGLE = (columnItem: ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
+export const renderLINESINGLE = (columnItem: Table_ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
   let setProperty = options.customSettings || {};
   let [ isEmpty, setVal ] = emptyReturn(text);
   let defaultProp = {
@@ -70,7 +70,7 @@ export const renderLINESINGLE = (columnItem: ColumnsTypeMine, text: string, reco
 }
 
 // 默认2行显示
-export const renderLINETWO = (columnItem: ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
+export const renderLINETWO = (columnItem: Table_ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
   let setProperty = options.customSettings || {};
   let [ isEmpty, setVal ] = emptyReturn(text);
   let defaultProp = {
@@ -87,7 +87,7 @@ export const renderLINETWO = (columnItem: ColumnsTypeMine, text: string, record:
 
 
 // 单输入框
-export const renderINPUT = (columnItem: ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
+export const renderINPUT = (columnItem: Table_ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
 
   const props = { record, columnItem, index };
 
@@ -101,10 +101,10 @@ export const renderINPUT = (columnItem: ColumnsTypeMine, text: string, record: a
   setApis = {...apis, ...{
     value: text
   }, ...{
-    onFocus: (e: MouseEvent | KeyboardEvent) => ALLCALLBACK(Enum_ALLEVENT.INPUT_onFocus, { e, ...props }),
-    onChange: (e: MouseEvent | KeyboardEvent) => ALLCALLBACK(Enum_ALLEVENT.INPUT_onChange, { e, ...props }),
-    onPressEnter: (e: MouseEvent | KeyboardEvent) => ALLCALLBACK(Enum_ALLEVENT.INPUT_onPressEnter, { e, ...props }),
-    onBlur: (e: MouseEvent | KeyboardEvent) => ALLCALLBACK(Enum_ALLEVENT.INPUT_onBlur, { e, ...props }),
+    onFocus: (e: MouseEvent | KeyboardEvent) => ALLCALLBACK(Table_Enum_ALLEVENT.INPUT_onFocus, { e, ...props }),
+    onChange: (e: MouseEvent | KeyboardEvent) => ALLCALLBACK(Table_Enum_ALLEVENT.INPUT_onChange, { e, ...props }),
+    onPressEnter: (e: MouseEvent | KeyboardEvent) => ALLCALLBACK(Table_Enum_ALLEVENT.INPUT_onPressEnter, { e, ...props }),
+    onBlur: (e: MouseEvent | KeyboardEvent) => ALLCALLBACK(Table_Enum_ALLEVENT.INPUT_onBlur, { e, ...props }),
   }}
 
   return (
@@ -121,13 +121,11 @@ export const renderINPUT = (columnItem: ColumnsTypeMine, text: string, record: a
 
 
 // 链接按钮 - 可着色
-export const renderLINKBUTTON = (columnItem: ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
+export const renderLINKBUTTON = (columnItem: Table_ColumnsTypeMine, text: string, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
   const props = { record, columnItem, index };
   const { condition: { customSettings } }: any = columnItem;
   let setStyle = {};
   let emptyValue = undefined;
-
-  // console.log('renderLINKBUTTON', columnItem, options);
 
   if (customSettings && customSettings.style) setStyle = customSettings.style;
 
@@ -140,7 +138,7 @@ export const renderLINKBUTTON = (columnItem: ColumnsTypeMine, text: string, reco
 
   setApis = {...setApis, ...{
     style: { ...setStyle },
-    onClick: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => ALLCALLBACK(Enum_ALLEVENT.LINKBUTTON_onClick, { e, ...props })
+    onClick: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => ALLCALLBACK(Table_Enum_ALLEVENT.LINKBUTTON_onClick, { e, ...props })
   }}
   
   return (
@@ -156,7 +154,7 @@ export const renderLINKBUTTON = (columnItem: ColumnsTypeMine, text: string, reco
 }
 
 // Date 转 日期字符串
-export const renderDATESTRING = (columnItem: ColumnsTypeMine, text: string | number, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
+export const renderDATESTRING = (columnItem: Table_ColumnsTypeMine, text: string | number, record: any, index: number, options: conditionUnit | any = {}, ALLCALLBACK: ALLEVENTCallbackType) => {
   let setProperty = options.customSettings || {};
   let {
     dateFormatType
@@ -179,7 +177,7 @@ export const renderDATESTRING = (columnItem: ColumnsTypeMine, text: string | num
 
 
 // 模板渲染配置器 (廢棄)
-export const TABLETEMPX_UNUSE = (columns: ColumnsTypeMine, eventAllCallback: ALLEVENTCallbackType): ColumnsType<any> => {
+export const TABLETEMPX_UNUSE = (columns: Table_ColumnsTypeMine, eventAllCallback: ALLEVENTCallbackType): ColumnsType<any> => {
   // 识别是否定义渲染的类型模式 - customType [ date时间/ input/ any more... ]
   
   return columns.map((item: any, index: number) => {
@@ -187,9 +185,9 @@ export const TABLETEMPX_UNUSE = (columns: ColumnsTypeMine, eventAllCallback: ALL
     let callback: Function | null = null;
 
     if (CKEY) {
-      if (CKEY === ColumnCustomType.INPUT) {
+      if (CKEY === Table_ColumnCustomType.INPUT) {
         callback = renderINPUT;
-      } else if (CKEY === ColumnCustomType.LINKBUTTON) {
+      } else if (CKEY === Table_ColumnCustomType.LINKBUTTON) {
         callback = renderLINKBUTTON;
       }
     }
@@ -209,7 +207,7 @@ export const TABLETEMPX_UNUSE = (columns: ColumnsTypeMine, eventAllCallback: ALL
 }
 
 
-export const TABLETEMP = (columns: ColumnsTypeMine, eventAllCallback: ALLEVENTCallbackType, props: TABLETEMP_PROPS): ColumnsType<any> => {
+export const TABLETEMP = (columns: Table_ColumnsTypeMine, eventAllCallback: ALLEVENTCallbackType, props: TABLETEMP_PROPS): ColumnsType<any> => {
   // 识别是否定义渲染的类型模式 - customType [ date时间/ input/ any more... ]
 
   let { isItemRender, reloadApiTable = {} } = props;
@@ -306,17 +304,17 @@ function allocationTemp(unit: conditionUnit):Function | never | null {
 
   // 此处有修改的空间，让今后使用者能够外部定义模板及模板类型名称
   if (CKEY) {
-    if (CKEY === ColumnCustomType.NORMALRENDER) {
+    if (CKEY === Table_ColumnCustomType.NORMALRENDER) {
       callback = renderNORMALRENDER;
-    } else if (CKEY === ColumnCustomType.INPUT) {
+    } else if (CKEY === Table_ColumnCustomType.INPUT) {
       callback = renderINPUT;
-    } else if (CKEY === ColumnCustomType.LINKBUTTON) {
+    } else if (CKEY === Table_ColumnCustomType.LINKBUTTON) {
       callback = renderLINKBUTTON;
-    } else if (CKEY === ColumnCustomType.DATESTRING) {
+    } else if (CKEY === Table_ColumnCustomType.DATESTRING) {
       callback = renderDATESTRING;
-    } else if (CKEY === ColumnCustomType.TEXTLINESINGLE) {
+    } else if (CKEY === Table_ColumnCustomType.TEXTLINESINGLE) {
       callback = renderLINESINGLE;
-    } else if (CKEY === ColumnCustomType.TEXTLINETWO) {
+    } else if (CKEY === Table_ColumnCustomType.TEXTLINETWO) {
       callback = renderLINETWO;
     }
   }
@@ -337,13 +335,13 @@ function allocationTemp(unit: conditionUnit):Function | never | null {
   condition: [
     true,
     {
-      customType: ColumnCustomType.INPUT,
+      customType: Table_ColumnCustomType.INPUT,
       optionsApi: {
         style: { width: 56 },
         maxLength: 4
       }
     },{
-      customType: ColumnCustomType.TEXT,
+      customType: Table_ColumnCustomType.TEXT,
       optionsApi: {
         style: { width: 56 },
         maxLength: 4
@@ -358,7 +356,7 @@ function allocationTemp(unit: conditionUnit):Function | never | null {
   condition: [
     true,
     {
-      customType: ColumnCustomType.INPUT,
+      customType: Table_ColumnCustomType.INPUT,
       optionsApi: {
         style: { width: 56 },
         maxLength: 4
@@ -366,7 +364,7 @@ function allocationTemp(unit: conditionUnit):Function | never | null {
     },[
       true,
       {
-        customType: ColumnCustomType.TEXT,
+        customType: Table_ColumnCustomType.TEXT,
         optionsApi: {
           style: { width: 56 },
           maxLength: 4

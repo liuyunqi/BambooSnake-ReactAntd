@@ -1,32 +1,30 @@
 import React from "react";
-
 import { Checkbox, Tooltip, Button } from "antd";
-
 import styles from "./index.less";
-import { check } from "prettier";
+
 
 // 组件传参
 interface IProps {
-  columns: []; // 表格列数据
-  table?: any; // 表格ref【可选 如不传会主动找，有可能会找错，具体逻辑在getTableColWidth中】
-  needStorage?: boolean, //是否需要在本地存储用户的列操作结果 【可选 默认false】
+  columns: [];        // 表格列数据
+  table?: any;        // 表格ref【可选 如不传会主动找，有可能会找错，具体逻辑在getTableColWidth中】
+  needStorage?: boolean, // 是否需要在本地存储用户的列操作结果 【可选 默认false】
   onChange?: (
     data: { columns: Array<any>; width: number },
     callback: any
-  ) => void; //确定后的回调 一个装有列数据和计算好的表格宽度的data，还有一个用于关闭弹出层的函数回调
+  ) => void;          // 确定后的回调 一个装有列数据和计算好的表格宽度的data，还有一个用于关闭弹出层的函数回调
 }
 
 interface IState {
-  allCols: []; //全部列
-  uniqId: string; //唯一id
-  colWidths: Array<any>; //列宽
-  tableXWidth: number; // 表格初始化宽度
-  allChecked: boolean; //是否全选
-  visible: boolean; //是否展示列选择弹出层
-  positionInfo: {
+  allCols: [];            // 全部列
+  uniqId: string;         // 唯一id
+  colWidths: Array<any>;  // 列宽
+  tableXWidth: number;    // 表格初始化宽度
+  allChecked: boolean;    // 是否全选
+  visible: boolean;       // 是否展示列选择弹出层
+  positionInfo: {         // 位置信息
     left: number;
     top: number;
-  }; //位置信息
+  };
 }
 
 class TableColumnLayer extends React.Component<IProps, IState> {

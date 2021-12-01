@@ -1,18 +1,15 @@
 import React, { ReactElement } from 'react';
-import { connect, history, Dispatch } from 'umi';
 
-import { Table, TableProps, Pagination, PaginationProps, Input, Popconfirm } from 'antd';
+import { Table, TableProps, Pagination, PaginationProps } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import { ColumnsTypeMine, customType, ALLEVENTCallbackType, ColumnCustomType } from './index.d';
+import { Table_ColumnsTypeMine, customType, ALLEVENTCallbackType, Table_ColumnCustomType } from './index.d';
 import { TABLETEMP } from './template';
 
 import styles from './index.less';
 
 
 interface IProps {
-  dispatch: Dispatch;
-
-  columns: ColumnsType<ColumnsTypeMine>;   // 表格列头
+  columns: ColumnsType<Table_ColumnsTypeMine>;   // 表格列头
   dataSource: any[];                       // 表格数据
   rowKey?: string | undefined;             // 自定义关键参数 default: id
   isShowPagination?: boolean;              // 是否显示分页组件
@@ -25,9 +22,9 @@ interface IProps {
   /**
    * 优先级低于antd-item.render。用于对大量的默认渲染做渲染进行操作；
    * @boolean 是否启用默认渲染, 不启用时默认为 antd-table 本身的 normal-render-function；
-   * @ColumnCustomType 当启用状态为true时, 该为渲染的模板类型标识
+   * @Table_ColumnCustomType 当启用状态为true时, 该为渲染的模板类型标识
   */
-  isItemRender?: [boolean, ColumnCustomType];    // 是否变更默认渲染table-td,
+  isItemRender?: [boolean, Table_ColumnCustomType];    // 是否变更默认渲染table-td,
 
   tableRef?: string | ((instance: HTMLDivElement | null) => void) | React.RefObject<HTMLDivElement> | null | undefined;
   pagainRef?: string | ((instance: HTMLDivElement | null) => void) | React.RefObject<HTMLDivElement> | null | undefined;
@@ -42,8 +39,7 @@ interface IProps {
 
 // string | ((instance: HTMLDivElement | null) => void) | React.RefObject<HTMLDivElement> | null | undefined
 
-const TableStore: React.FC<IProps> = ({
-  dispatch,
+const TableModule: React.FC<IProps> = ({
   columns,
   dataSource,
   rowKey,
@@ -54,7 +50,7 @@ const TableStore: React.FC<IProps> = ({
   pageLimit = 5,
   pageSizeOptions = [ '5', '10', '15', '20', '50' ],
 
-  isItemRender = [true, ColumnCustomType.NORMALRENDER],
+  isItemRender = [true, Table_ColumnCustomType.NORMALRENDER],
 
   tableRef,
   pagainRef,
@@ -118,10 +114,6 @@ const TableStore: React.FC<IProps> = ({
   );
 }
 
-// connect props...
-const mapStateToProps = () => {
-  return {}
-}
-
+// export { Table_ColumnsTypeMine, Table_ColumnCustomType, Table_Enum_ALLEVENT, Table_enumEventType, Table_enumViewMode, Table_sActions } from './index.d';
 export * from './index.d';
-export default connect(mapStateToProps)(TableStore);
+export default TableModule;

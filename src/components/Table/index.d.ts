@@ -6,7 +6,7 @@ import { enumDataMode } from '../../utils/BaseTool';
 export const customType = 'customType';    // 自定义列项渲染类型 - fix Key
 
 // 自定义的表格列项类型
-export enum ColumnCustomType {
+export enum Table_ColumnCustomType {
   NORMALRENDER = 'NORMALRENDER',  // 默认渲染text
   INPUT = 'INPUT',                // input 输入单框
   LINKBUTTON = 'LINKBUTTON',      // 链接按钮
@@ -15,8 +15,8 @@ export enum ColumnCustomType {
   TEXTLINETWO = 'TEXTLINETWO',        // 文本显示2行
 }
 
-/* export interface ColumnsTypeMine extends ColumnsType<any> {
-    customType?: ColumnCustomType;
+/* export interface Table_ColumnsTypeMine extends ColumnsType<any> {
+    customType?: Table_ColumnCustomType;
 } */
 
 interface customSettingsIntef {
@@ -26,7 +26,7 @@ interface customSettingsIntef {
 }
 
 
-export interface ColumnsTypeMine extends ColumnsType<any> {
+export interface Table_ColumnsTypeMine extends ColumnsType<any> {
   condition?: [
     boolean | string,
     conditionUnit,
@@ -36,18 +36,18 @@ export interface ColumnsTypeMine extends ColumnsType<any> {
     boolean | string,
     conditionUnit
   ];
-  customType?: ColumnCustomType;
+  customType?: Table_ColumnCustomType;
   customSettings?: customSettingsIntef;
 }
 
 // 全局自定义事件回调
 export interface ALLEVENTCallbackType {
-  (EVENTTYPE: Enum_ALLEVENT, data: any): void;
+  (EVENTTYPE: Table_Enum_ALLEVENT, data: any): void;
 }
 
 
 // 全事件类型枚举
-export enum Enum_ALLEVENT {
+export enum Table_Enum_ALLEVENT {
   // 输入框
   'INPUT_onFocus',
   'INPUT_onChange',
@@ -60,7 +60,7 @@ export enum Enum_ALLEVENT {
 
 // 条件单元
 export interface conditionUnit {
-  customType: ColumnCustomType;           // 自定义的模板枚举TYPE标识
+  customType: Table_ColumnCustomType;     // 自定义的模板枚举TYPE标识
   customSettings?: customSettingsIntef;   // 自定义对【结构】的自由配置处 （例 {style, .... }，根据不同模板使用不同关键值）
   optionsApi?: any;                       // 自定义对【组件】的自由配置处，按组件具体API配置
 }
@@ -70,7 +70,7 @@ export interface conditionUnit {
 export interface rcColumnItem extends ColumnType<any> {
   name: string;
   key?: string;   // is xx enum
-  /* customType?: ColumnCustomType;      // 自定义的模板枚举TYPE标识
+  /* customType?: Table_ColumnCustomType;      // 自定义的模板枚举TYPE标识
   customSettings?: any;               // 自定义对【结构】的自由配置处 （例 {style, .... }，根据不同模板使用不同关键值）
   optionsApi?: any;                   // 自定义对【组件】的自由配置处，按组件具体API配置 */
 
@@ -100,19 +100,19 @@ export interface rcColumnItemSet extends rcColumnItem {
 
 // 模板配置函数传参
 export interface TABLETEMP_PROPS {
-  isItemRender: [boolean, ColumnCustomType];
+  isItemRender: [boolean, Table_ColumnCustomType];
   reloadApiTable: any;
 }
 
 // 事件类型 - 操作栏按钮被点击
-export enum enumEventType {
+export enum Table_enumEventType {
   CALLBACK = 'callback',
   POPCONFIRM = 'popconfirm',
   MODALBOX = 'modalbox'
 }
 
 // 结构方式 - 操作栏按钮显示方式
-export enum enumViewMode {
+export enum Table_enumViewMode {
   DEFAULT = 'default',
   ICON = 'icon',
   ICONTEXT = 'iconText'
@@ -140,11 +140,11 @@ interface ConditionFace {
 }
 
 // operation item
-export interface sActions {
+export interface Table_sActions {
   text: string;
   icon?: string | ImageData | JSX.Element;
-  eventType?: enumEventType;
+  eventType?: Table_enumEventType;
   eventSubstance?: Function | confrimConf;
-  viewMode?: enumViewMode;
+  viewMode?: Table_enumViewMode;
   condition?: ConditionFace;
 }

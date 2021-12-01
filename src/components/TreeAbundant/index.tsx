@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useReducer, ReactElement, StyleHTMLAttributes } from 'react';
-import { connect, history, Dispatch } from 'umi';
+import React, { useState, useEffect } from 'react';
 import { Tree, Radio, RadioChangeEvent, TreeProps } from 'antd';
-import { enumEVENTTYPE, intfTabsItem, intfEventHandle, intfDataNodeKeyConf } from './index.d';
+import { TreeAbundant_enumEVENTTYPE, intfTabsItem, TreeAbundant_eventHandle, intfDataNodeKeyConf } from './index.d';
 
 import styles from './index.less';
 
@@ -9,10 +8,8 @@ const { TreeNode } = Tree;
 
 
 interface IProps  {
-  dispatch: Dispatch;
-  
   treeDataSource: any[];                    // tree组件数据
-  eventHandle: intfEventHandle;             // 公共回调事件
+  eventHandle: TreeAbundant_eventHandle;    // 公共回调事件
   effectTreeCheckedKeys: React.Key[];       // 再次定义多选 (default: 'key')
 
   dataNodeKeyConf?: intfDataNodeKeyConf;    // 关键字段自定义配置 [title, key, children]
@@ -43,8 +40,6 @@ const defaultDataNodeKeyConf: intfDataNodeKeyConf = {
 };
 
 const TreeAbundantStore: React.FC<IProps> = ({
-  dispatch,
-  
   dataNodeKeyConf = defaultDataNodeKeyConf,       // 目前坑爹 antd-tree 并不支持自定义关键字功能(想法很好，现实残酷)
   treeDataSource = [],
   eventHandle,
@@ -72,21 +67,21 @@ const TreeAbundantStore: React.FC<IProps> = ({
   const [ checkRadio, setCheckRadio ] = useState(defaultRadioValue);     // 当前选中radio-value
 
   /* tree集合 */
-  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>(defaultTreeExpandedKeys);     // 展开容器
-  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>(defaultTreeCheckedKeys);        // 多选容器
-  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>(defaultSelectedKeys);         // 选中容器
-  const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
+  const [ expandedKeys, setExpandedKeys ] = useState<React.Key[]>(defaultTreeExpandedKeys);     // 展开容器
+  const [ checkedKeys, setCheckedKeys ] = useState<React.Key[]>(defaultTreeCheckedKeys);        // 多选容器
+  const [ selectedKeys, setSelectedKeys ] = useState<React.Key[]>(defaultSelectedKeys);         // 选中容器
+  const [ autoExpandParent, setAutoExpandParent ] = useState<boolean>(true);
   
   // 该处 effectTreeCheckedKeys 建议在外部传参必传,否则这边会因为 effect + setCheckedKeys 无限循环的响应render
   useEffect(()  => {
     setCheckedKeys(effectTreeCheckedKeys);
-  }, [effectTreeCheckedKeys]);
+  }, [ effectTreeCheckedKeys ]);
 
   // tabs切卡选择 - 事件
   const onRadioChange = (e: RadioChangeEvent) => {
     let setVal = e.target.value;
     setCheckRadio(setVal);
-    eventHandle(enumEVENTTYPE.RADIO_CHANGE, setVal);
+    eventHandle(TreeAbundant_enumEVENTTYPE.RADIO_CHANGE, setVal);
   }
 
   
@@ -97,19 +92,19 @@ const TreeAbundantStore: React.FC<IProps> = ({
     setExpandedKeys(expandedKeysValue);
     setAutoExpandParent(false);
 
-    eventHandle(enumEVENTTYPE.TREE_EXPEND, expandedKeysValue);
+    eventHandle(TreeAbundant_enumEVENTTYPE.TREE_EXPEND, expandedKeysValue);
   };
 
   // tree多选 - 事件
   const tree_onCheck = (checkedKeysValue: React.Key[], info: any) => {
     setCheckedKeys(checkedKeysValue);
-    eventHandle(enumEVENTTYPE.TREE_CHECKED, {checkedKeysValue, checkedNodes: info.checkedNodes});
+    eventHandle(TreeAbundant_enumEVENTTYPE.TREE_CHECKED, {checkedKeysValue, checkedNodes: info.checkedNodes});
   };
 
   // tree选中 - 事件
   const tree_onSelect = (selectedKeysValue: React.Key[], info: any) => {
     setSelectedKeys(selectedKeysValue);
-    eventHandle(enumEVENTTYPE.TREE_SELECT, selectedKeysValue);
+    eventHandle(TreeAbundant_enumEVENTTYPE.TREE_SELECT, selectedKeysValue);
   };
 
   /* JSX.DOM render */
@@ -236,10 +231,6 @@ const TreeAbundantStore: React.FC<IProps> = ({
   );
 }
 
-// connect props...
-const mapStateToProps = () => {
-  return {}
-}
-
+// export { TreeAbundant_enumEVENTTYPE, TreeAbundant_eventHandle } from './index.d';
 export * from './index.d';
-export default connect(mapStateToProps)(TreeAbundantStore);
+export default TreeAbundantStore;

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useReducer, ReactElement, StyleHTMLAttributes } from 'react';
+import React from 'react';
 import { Upload, UploadProps, Modal, message, Button } from 'antd';
 import { ExclamationCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import * as XLSX from 'xlsx';
-
 import { fileTypeStr, fuetdCallback } from './index.d';
 
 import styles from './index.less';

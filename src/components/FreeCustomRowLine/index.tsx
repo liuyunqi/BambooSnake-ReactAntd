@@ -1,29 +1,29 @@
-import React, { useState, useEffect, useReducer, ReactElement, StyleHTMLAttributes, Attributes, HtmlHTMLAttributes, HTMLAttributes } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Input, AutoComplete, InputNumber } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 // import { useCallbackState } from '@/public/utils/hookCallback';
-import { ELEMENTTEMP, EVENTTYPE, LINEBUTTONS, LineButtons, LineButtonItem, LineButtonSetting, LineSort, templateRows, templateRowItemConf } from './index.d';
+import { FreeCustomRowLine_ELEMENTTEMP, FreeCustomRowLine_EVENTTYPE, FreeCustomRowLine_LINEBUTTONS, LineButtons, LineButtonItem, LineButtonSetting, LineSort, templateRows, templateRowItemConf } from './index.d';
 
 import styles from './index.less';
 
-let eventType: EVENTTYPE = EVENTTYPE.INIT;
+let eventType: FreeCustomRowLine_EVENTTYPE = FreeCustomRowLine_EVENTTYPE.INIT;
 
 
 let defLineButtonsConfig = {
-  [LINEBUTTONS.DELETE]: {
-    type: LINEBUTTONS.DELETE,
+  [FreeCustomRowLine_LINEBUTTONS.DELETE]: {
+    type: FreeCustomRowLine_LINEBUTTONS.DELETE,
     text: '删除'
   },
-  [LINEBUTTONS.LOCK]: {
-    type: LINEBUTTONS.LOCK,
+  [FreeCustomRowLine_LINEBUTTONS.LOCK]: {
+    type: FreeCustomRowLine_LINEBUTTONS.LOCK,
     text: '锁定'
   },
-  [LINEBUTTONS.MOVE_UP]: {
-    type: LINEBUTTONS.MOVE_UP,
+  [FreeCustomRowLine_LINEBUTTONS.MOVE_UP]: {
+    type: FreeCustomRowLine_LINEBUTTONS.MOVE_UP,
     text: '向上移动'
   },
-  [LINEBUTTONS.MOVE_DOWN]: {
-    type: LINEBUTTONS.MOVE_DOWN,
+  [FreeCustomRowLine_LINEBUTTONS.MOVE_DOWN]: {
+    type: FreeCustomRowLine_LINEBUTTONS.MOVE_DOWN,
     text: '向下移动'
   }
 }
@@ -32,8 +32,8 @@ let defLineButtonsConfig = {
 interface IProps {
   templateRow: templateRows;           // 渲染模板参与内容，确定单行渲染模板         
   lineSort?: LineSort;                 // 行配置
-  lineButtons?: LineButtons;
-  callback?: (EVENTTYPE: EVENTTYPE, data: any) => void;    // 组件回调函数
+  lineButtons?: LineButtons;           // 单行控制按钮组
+  callback?: (EVENTTYPE: FreeCustomRowLine_EVENTTYPE, data: any) => void;    // 组件回调函数
 }
 
 const module: React.FC<IProps> = ({
@@ -49,11 +49,11 @@ const module: React.FC<IProps> = ({
   },
 
   lineButtons = [
-    // 示例 [ true, { type: LINEBUTTONS.DELETE, text: '删除'}],
-    [true, { type: LINEBUTTONS.DELETE }],
-    [false, { type: LINEBUTTONS.LOCK }],
-    [false, { type: LINEBUTTONS.MOVE_UP }],
-    [false, { type: LINEBUTTONS.MOVE_DOWN }],
+    // 示例 [ true, { type: FreeCustomRowLine_LINEBUTTONS.DELETE, text: '删除'}],
+    [true, { type: FreeCustomRowLine_LINEBUTTONS.DELETE }],
+    [false, { type: FreeCustomRowLine_LINEBUTTONS.LOCK }],
+    [false, { type: FreeCustomRowLine_LINEBUTTONS.MOVE_UP }],
+    [false, { type: FreeCustomRowLine_LINEBUTTONS.MOVE_DOWN }],
   ],
 
   callback,
@@ -74,8 +74,8 @@ const module: React.FC<IProps> = ({
   }, [allLineDatas]);
 
   // 通用事件回归
-  const commonEvent_handle = (TYPE: EVENTTYPE, e: React.ChangeEvent<HTMLInputElement>, [rowIndex, valIndex, rcIndex]: number[]) => {
-    if (EVENTTYPE.INPUT === TYPE) {
+  const commonEvent_handle = (TYPE: FreeCustomRowLine_EVENTTYPE, e: React.ChangeEvent<HTMLInputElement>, [rowIndex, valIndex, rcIndex]: number[]) => {
+    if (FreeCustomRowLine_EVENTTYPE.INPUT === TYPE) {
       inputChange_handle(e, [rowIndex, valIndex, rcIndex]);
     }
   }
@@ -83,7 +83,7 @@ const module: React.FC<IProps> = ({
   // 输入事件
   const inputChange_handle = (e: React.ChangeEvent<HTMLInputElement>, [rowIndex, valIndex, rcIndex]: number[]) => {
 
-    eventType = EVENTTYPE.INPUT;
+    eventType = FreeCustomRowLine_EVENTTYPE.INPUT;
 
     let value = e.target.value;
 
@@ -102,7 +102,7 @@ const module: React.FC<IProps> = ({
 
   // input [数字类型] 输入框
   const inputNumberChange_handle = (value: number | string | null, [rowIndex, valIndex, rcIndex]: number[]) => {
-    eventType = EVENTTYPE.INPUT;
+    eventType = FreeCustomRowLine_EVENTTYPE.INPUT;
 
     allLineDatas[rowIndex][valIndex] = { value };
 
@@ -118,20 +118,20 @@ const module: React.FC<IProps> = ({
 
   // 聚焦
   const inputFocus_handle = (e: React.ChangeEvent<HTMLInputElement>, [rowIndex, valIndex, rcIndex]: number[]) => {
-    eventType = EVENTTYPE.FOCUS;
+    eventType = FreeCustomRowLine_EVENTTYPE.FOCUS;
     toCallback(eventType, { allLineDatas, rowIndex, valIndex });
   }
 
   // 失焦
   const inputBlur_handle = (e: React.ChangeEvent<HTMLInputElement>, [rowIndex, valIndex, rcIndex]: number[]) => {
-    eventType = EVENTTYPE.BLUR;
+    eventType = FreeCustomRowLine_EVENTTYPE.BLUR;
     toCallback(eventType, { allLineDatas, rowIndex, valIndex });
   }
 
 
 
   // 回调
-  const toCallback = (EVENTTYPE: EVENTTYPE, data: any) => {
+  const toCallback = (EVENTTYPE: FreeCustomRowLine_EVENTTYPE, data: any) => {
     callback && callback(EVENTTYPE, data);
   }
 
@@ -145,20 +145,20 @@ const module: React.FC<IProps> = ({
 
   // 新增一行Click
   const add_handle = () => {
-    eventType = EVENTTYPE.ADD;
+    eventType = FreeCustomRowLine_EVENTTYPE.ADD;
     initTempValuesAdvance();
   }
 
   // 单行 - 全按钮事件
-  const lineAllButton_handle = (buttonType: LINEBUTTONS, rowIndex: number, e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    if (LINEBUTTONS.DELETE === buttonType) {
+  const lineAllButton_handle = (buttonType: FreeCustomRowLine_LINEBUTTONS, rowIndex: number, e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (FreeCustomRowLine_LINEBUTTONS.DELETE === buttonType) {
       delete_handle(e, rowIndex);
     }
   }
 
   // 删除一行Click
   const delete_handle = (e: React.MouseEvent<HTMLElement, MouseEvent>, rowIndex: number) => {
-    eventType = EVENTTYPE.DELETE;
+    eventType = FreeCustomRowLine_EVENTTYPE.DELETE;
     allLineDatas.splice(rowIndex, 1);
 
     setAllLineDatas((prev) => {
@@ -175,15 +175,15 @@ const module: React.FC<IProps> = ({
   }
 
   // 调用模板
-  const callTemp = (tempType: ELEMENTTEMP, { text, ...props }: any): JSX.Element => {
+  const callTemp = (tempType: FreeCustomRowLine_ELEMENTTEMP, { text, ...props }: any): JSX.Element => {
     switch (tempType) {
-      case ELEMENTTEMP.INPUT:
+      case FreeCustomRowLine_ELEMENTTEMP.INPUT:
         return <Input {...props} />
-      case ELEMENTTEMP.AUTOCOMPLETE:
+      case FreeCustomRowLine_ELEMENTTEMP.AUTOCOMPLETE:
         return <AutoComplete {...props} />
-      case ELEMENTTEMP.INPUTNUMBER:
+      case FreeCustomRowLine_ELEMENTTEMP.INPUTNUMBER:
         return <InputNumber {...props} />
-      case ELEMENTTEMP.SPAN:
+      case FreeCustomRowLine_ELEMENTTEMP.SPAN:
       default: {
         let setProps: any = {};
         props.style && (setProps.style = props.style);
@@ -209,7 +209,7 @@ const module: React.FC<IProps> = ({
 
     style && (attrProps['style'] = style);
 
-    if (elementTEMP === ELEMENTTEMP.INPUT || elementTEMP === ELEMENTTEMP.INPUTNUMBER || elementTEMP === ELEMENTTEMP.AUTOCOMPLETE) {
+    if (elementTEMP === FreeCustomRowLine_ELEMENTTEMP.INPUT || elementTEMP === FreeCustomRowLine_ELEMENTTEMP.INPUTNUMBER || elementTEMP === FreeCustomRowLine_ELEMENTTEMP.AUTOCOMPLETE) {
       // bind attr
       placeholder && (attrProps['placeholder'] = placeholder);
       maxLength && (attrProps['maxLength'] = maxLength);
@@ -219,15 +219,15 @@ const module: React.FC<IProps> = ({
       attrProps['onFocus'] = (e: React.ChangeEvent<HTMLInputElement>) => inputFocus_handle(e, [rowIndex, valIndex, rcIndex]);
       attrProps['onBlur'] = (e: React.ChangeEvent<HTMLInputElement>) => inputBlur_handle(e, [rowIndex, valIndex, rcIndex]);
 
-      if (elementTEMP === ELEMENTTEMP.INPUT || elementTEMP === ELEMENTTEMP.AUTOCOMPLETE) {
+      if (elementTEMP === FreeCustomRowLine_ELEMENTTEMP.INPUT || elementTEMP === FreeCustomRowLine_ELEMENTTEMP.AUTOCOMPLETE) {
         attrProps['onChange'] = (e: React.ChangeEvent<HTMLInputElement>) => inputChange_handle(e, [rowIndex, valIndex, rcIndex]);
       }
 
-      if (elementTEMP === ELEMENTTEMP.INPUTNUMBER) {
+      if (elementTEMP === FreeCustomRowLine_ELEMENTTEMP.INPUTNUMBER) {
         attrProps['onChange'] = (value: number | string | null) => inputNumberChange_handle(value, [rowIndex, valIndex, rcIndex]);
       }
 
-      if (elementTEMP === ELEMENTTEMP.AUTOCOMPLETE) {
+      if (elementTEMP === FreeCustomRowLine_ELEMENTTEMP.AUTOCOMPLETE) {
         attrProps['onSearch'] = (e: React.ChangeEvent<HTMLInputElement>) => inputFocus_handle(e, [rowIndex, valIndex, rcIndex]);
         attrProps['onSelect'] = (e: React.ChangeEvent<HTMLInputElement>) => inputBlur_handle(e, [rowIndex, valIndex, rcIndex]);
       }
@@ -260,9 +260,9 @@ const module: React.FC<IProps> = ({
         let { elementTEMP, value, apiOptions } = item;
 
         if (
-          elementTEMP === ELEMENTTEMP.INPUT ||
-          elementTEMP === ELEMENTTEMP.AUTOCOMPLETE ||
-          elementTEMP === ELEMENTTEMP.INPUTNUMBER
+          elementTEMP === FreeCustomRowLine_ELEMENTTEMP.INPUT ||
+          elementTEMP === FreeCustomRowLine_ELEMENTTEMP.AUTOCOMPLETE ||
+          elementTEMP === FreeCustomRowLine_ELEMENTTEMP.INPUTNUMBER
         ) {
           let setValue = { value: (apiOptions && apiOptions.value) || value || '' };     // 获取是否有默认参数配置
           rowValues.push(setValue);
@@ -365,5 +365,6 @@ const module: React.FC<IProps> = ({
     </div>
   );
 }
+// export { FreeCustomRowLine_ELEMENTTEMP, FreeCustomRowLine_EVENTTYPE, FreeCustomRowLine_LINEBUTTONS } from './index.d';
 export * from './index.d';
 export default module;

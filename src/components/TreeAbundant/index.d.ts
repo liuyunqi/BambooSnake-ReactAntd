@@ -1,7 +1,7 @@
 
 
 // 回调事件枚举
-export enum enumEVENTTYPE {
+export enum TreeAbundant_enumEVENTTYPE {
   RADIO_CHANGE = 'RADIO_CHANGE',
   TREE_EXPEND  = 'TREE_EXPEND',
   TREE_CHECKED = 'TREE_CHECKED',
@@ -9,8 +9,8 @@ export enum enumEVENTTYPE {
 }
 
 // 公共回调事件
-export interface intfEventHandle {
-  (TYPE: enumEVENTTYPE, data: any) : void;           
+export interface TreeAbundant_eventHandle {
+  (TYPE: TreeAbundant_enumEVENTTYPE, data: any) : void;           
 }
 
 // 切换卡item数据
