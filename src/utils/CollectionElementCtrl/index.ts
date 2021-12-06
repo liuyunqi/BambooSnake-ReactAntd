@@ -135,9 +135,11 @@ export default class CollectionElementCtrl {
 
   // 聚焦内部input
   focusInsideInput(index?: number) {
-    const tIndex = index || this.indexRecord;
-    const element = this.collectionsElements[tIndex];
-    element.children[this.columnIndex].querySelector('input')?.focus();
+    try {
+      const tIndex = index || this.indexRecord;
+      const element = this.collectionsElements[tIndex];
+      element.children[this.columnIndex].querySelector('input')?.focus();
+    } catch(err) {}
   }
 
   // 重置

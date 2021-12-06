@@ -88,6 +88,59 @@ ArrayVeidooTransfrom = (list: any[], mo: number) :array[];
 
 
 
+##### CollectionElementCtrl - HTML元素集合控制器
+
+针对元素对象集合进行遍历操作。
+
+内置索引记录器，可以通过使用指令对其进行遍历，对遍历目标元素进行 Attr 属性赋值（如class、style），对非当前active元素进行清理值。
+
+支持对目标元素进行class/ style的配置自定义。
+
+```typescript
+import Bamboo from 'bamboosnaketool';
+
+const { CollectionElementCtrl } = Bamboo;
+
+// 元素集合操作
+const $CollectionElementCtrl = new CollectionElementCtrl({
+  collectionsElements: [],	// dom对象集合 （可初始化设置/ 通过.setCollectionsElements()插入调用）
+  indexRecord: 0,			// 行索引 - rowIndex
+  columnIndex: 4,			// 列索引 - 锁定单元格
+  needFoucusHTMLElementInput: true	// 是否聚焦input - 是否需要检查当前 纵及列<td>单元格内是否包含input
+});
+
+```
+
+可结合 Bamboo.KeywordsContrl 的键盘事件组件搭配使用。（如：操作表格，通过键盘（上下左右）指令在表格的row及td中的元素进行操作。）
+
+演示表格行通过 ↑ ↓ 键盘来做到行来回选中效果。
+
+```typescript
+
+const TableScanRef = React.createRef<HTMLDivElement>(); // TABLE - 表格 (用于控制-rowSelected)
+
+// 获取Element集合
+const tbody = (TableRef.current as HTMLDivElement).children[0].querySelector('.ant-table-tbody');
+let trNodes: HTMLTableRowElement[] = [];
+tbody?.querySelectorAll('tr').forEach((trElement: HTMLTableRowElement, index: number) => {
+    if (index > 0) {
+        trNodes.push(trElement);
+    }
+});
+
+// 装载DOM元素集合到 组件内
+$CollectionElementCtrl.setCollectionsElements(trNodes);
+
+// print 是 Bamboo.KeywordsContrl 事件回调里的按键标识
+if (print === 'top') {
+    $CollectionElementCtrl.reduce();
+} else if (print === 'bottom') {
+    $CollectionElementCtrl.addition();
+}
+```
+
+
+
 ##### AccessorOverdue - 存取器 - 过期限制 （save data to localSession）：
 
 ```typescript
